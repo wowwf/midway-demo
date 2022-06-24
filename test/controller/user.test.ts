@@ -12,11 +12,14 @@ describe('test/controller/user.test.ts', () => {
     await createHttpRequest(app).post('/api/user').send({ username: 'jack', password: 'redballoon' });
 
     // make request
+    const start = new Date().getTime();
     const result = await createHttpRequest(app).post('/api/user/login').send({ username: 'jack', password: 'redballoon' });
+    const end = new Date().getTime();
     assert.equal(result.body.code, 200);
     assert.equal(result.body.result, 'success');
     assert.equal(result.body.message, '登录成功');
     assert.ok(_.isString(result.body.data.token), 'token未正常获取');
+    assert.ok((end - start)/1000 < 1, '超过1秒啦');
 
     const errorResult = await createHttpRequest(app).post('/api/user/login').send({ username: 'jack', password: 'test' });
     assert.equal(errorResult.body.code, 400);
