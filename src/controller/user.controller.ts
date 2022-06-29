@@ -1,4 +1,4 @@
-import {Body, Controller, Inject, Post} from "@midwayjs/decorator";
+import {Body, Controller, Get, Inject, Post} from "@midwayjs/decorator";
 import {UserLoginDto} from "../dto/userLogin.dto";
 import {Context} from "koa";
 import {ResponseDto} from "../dto/response.dto";
@@ -34,6 +34,11 @@ export class UserController {
   async createUser(@Body() user: UserCreateDto): Promise<ResponseDto> {
     await this.userModel.createOne(user);
     return new ResponseDto(200, 'success', '注册成功');
+  }
+
+  @Get('/users')
+  async getUsers() {
+    return this.userModel.getUser('scc');
   }
 
 }

@@ -1,6 +1,6 @@
 import {InjectEntityModel} from "@midwayjs/orm";
 import {UserEntity} from "../entity/user.entity";
-import {Repository} from "typeorm";
+import {getRepository, Repository} from "typeorm";
 import {Provide} from "@midwayjs/decorator";
 import {UserCreateDto} from "../dto/userCreate.dto";
 
@@ -19,14 +19,11 @@ export class UserModel {
     return await this.userRepo.findOne({ where: {username, password}});
   }
 
-  async onModuleInit(): Promise<void> {
-    await this.userRepo.save({
-      username: 'jack',
-      password: 'redballoon'
-    });
-  }
-
   async createOne(user: UserCreateDto): Promise<UserEntity> {
     return await this.userRepo.save(user);
+  }
+
+  async getUser(ormName: string) {
+    return await getRepository(UserEntity, ormName).find();
   }
 }

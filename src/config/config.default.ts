@@ -7,12 +7,14 @@ export default {
     port: 7001,
   },
   orm: {
-    type: "sqlite",
-    database: ":memory:",
-    dropSchema: true,
-    entities: ['src/entity/*.entity{.ts,.js}'],
-    synchronize: true,
-    logging: false
+    default: {
+      type: "sqlite",
+      database: ":memory:",
+      dropSchema: true,
+      entities: ['src/entity/*.entity{.ts,.js}'],
+      synchronize: true,
+      logging: false
+    }
   },
   jwt: {
     secret: 'secret',
